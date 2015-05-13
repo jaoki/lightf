@@ -4,18 +4,17 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@Path("/ls")
-public class A {
+@Path("/mkdir")
+public class MkdirCommand {
 	
 	@XmlRootElement
-	public static class AResult {
+	public static class MkdirResult {
 
 	}
 
 	@GET
-	public AResult get(){
-		return new AResult();
-		
+	public MkdirResult get(){
+		return new MkdirResult();
 	}
 
 }
