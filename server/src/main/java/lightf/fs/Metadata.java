@@ -13,7 +13,12 @@ public class Metadata {
 	}
 	
 	public List<FileSystemElement> findChildren(String path){
-		String[] pathDirNames = path.split("/");
+		String[] pathDirNames;
+		if(path.startsWith("/")){
+			pathDirNames = path.replaceFirst("/", "").split("/");
+		}else{
+			pathDirNames = path.split("/");
+		}
 
 		List<FileSystemElement> target = MetadataHolder.metadata.root.childlen;
 		for(int i = 0 ; i < pathDirNames.length; i++){
@@ -21,7 +26,7 @@ public class Metadata {
 			for(FileSystemElement child : target){
 				if(child.name.equals(pathDirName)){
 					target = child.childlen;
-					if(i == pathDirName.length() - 1){
+					if(i == pathDirNames.length - 1){
 						return target;
 					}
 				}
@@ -39,7 +44,7 @@ public class Metadata {
 		public FileSystemElement(String name) {
 			this.name = name;
 			this.parent = null;
-			this.childlen = null;
+			this.childlen = new ArrayList<Metadata.FileSystemElement>();
 		}
 
 	}
