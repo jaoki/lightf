@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import lightf.fs.Metadata;
 import lightf.fs.Metadata.Dir;
+import lightf.fs.Metadata.FileSystemElement;
 import lightf.fs.MetadataHolder;
 
 @Path("/init")
@@ -22,7 +23,7 @@ public class TestInitCommand {
 	@GET
 	public AResult get(){
 		MetadataHolder.metadata = new Metadata();
-		List<Dir> children1 = new ArrayList<Metadata.Dir>();
+		List<FileSystemElement> children1 = new ArrayList<Metadata.FileSystemElement>();
 		Dir d1 = new Dir("d1");
 		Dir d2 = new Dir("d2");
 		children1.add(d1);
