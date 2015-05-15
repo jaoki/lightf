@@ -1,4 +1,4 @@
-package lightf.api;
+package lightf.api.server;
 
 import java.util.ArrayList;
 import java.util.List;

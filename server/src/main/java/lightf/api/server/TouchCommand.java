@@ -1,4 +1,4 @@
-package lightf.api;
+package lightf.api.server;
 
 import java.util.List;
 
@@ -9,31 +9,25 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import lightf.fs.Metadata.File;
 import lightf.fs.Metadata.FileSystemElement;
 import lightf.fs.MetadataHolder;
 
-@Path("/ls")
-public class LsCommand {
+@Path("/touch")
+public class TouchCommand {
 	
 	@XmlRootElement
-	public static class LsResult {
-		public List<FileSystemElement> children;
-
-		public LsResult() {
-			children = null;
-		}
-
-		public LsResult(List<FileSystemElement> children) {
-			this.children = children;
-		}
-
+	public static class TouchResult {
+		public TouchResult() {}
 	}
 
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
-	public LsResult get(@QueryParam("path") String path){
+	public TouchResult get(@QueryParam("path") String path, @QueryParam("content") String content){
 		List<FileSystemElement> children = MetadataHolder.metadata.findChildren(path);
-		return new LsResult(children);
+		File f = (File)children.get(0);
+		f.fileContentHandler.content = content;
+		return new TouchResult();
 	}
 
 }
