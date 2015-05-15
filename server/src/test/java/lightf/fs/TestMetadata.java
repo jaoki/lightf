@@ -19,6 +19,7 @@ public class TestMetadata {
 		Dir d11 = new Dir("d11");
 		d1.childlen.add(d11);
 		File f12 = new File("f12");
+		f12.fileContentHandle.setContent("abc");
 		d1.childlen.add(f12);
 
 		Dir d2 = new Dir("d2");
@@ -35,7 +36,8 @@ public class TestMetadata {
 		
 		FileSystemElement file = metadata.getFileSystemElement("/d1/f12");
 		Assert.assertEquals(file.name, "f12");
-//		Assert.assertNull(file.content); TODO fix this
+		Assert.assertTrue(file instanceof File);
+		Assert.assertEquals(((File)file).fileContentHandle.getContent(), "abc");
 
 	}
 

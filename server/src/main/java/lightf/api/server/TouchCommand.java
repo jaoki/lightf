@@ -18,15 +18,14 @@ public class TouchCommand {
 	
 	@XmlRootElement
 	public static class TouchResult {
-		public TouchResult() {}
 	}
 
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	public TouchResult get(@QueryParam("path") String path, @QueryParam("content") String content){
-		List<FileSystemElement> children = MetadataHolder.metadata.findChildren(path);
-		File f = (File)children.get(0);
-		f.fileContentHandler.content = content;
+		FileSystemElement element = MetadataHolder.metadata.getFileSystemElement(path);
+		File f = (File)element;
+		f.fileContentHandle.setContent(content);
 		return new TouchResult();
 	}
 

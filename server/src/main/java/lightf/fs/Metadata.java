@@ -3,7 +3,7 @@ package lightf.fs;
 import java.util.ArrayList;
 import java.util.List;
 
-import lightf.api.slave.FileContent;
+import lightf.api.slave.FileContentHandle;
 
 public class Metadata {
 	public Dir root;
@@ -106,10 +106,11 @@ public class Metadata {
 	}
 	
 	public static class File extends FileSystemElement{
-		public FileContent fileContentHandler;
+		public FileContentHandle fileContentHandle;
 
 		public File(String name) {
 			super(name);
+			fileContentHandle = new FileContentHandle();
 		}
 	}
 
