@@ -1,12 +1,15 @@
 package lightf.api.slave;
 
+import offheap.OffHeapManager;
+
 public class FileContentHandle {
-	private String content;
+	private int blockIndex;
 	
 	public String getContent(){
-		return content;
+		return OffHeapManager.get(blockIndex);
 	}
 	public void setContent(String content){
-		this.content = content;
+		OffHeapManager.allocate();
+		blockIndex = OffHeapManager.add(content);
 	}
 }

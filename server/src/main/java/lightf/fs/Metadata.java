@@ -3,6 +3,8 @@ package lightf.fs;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import lightf.api.slave.FileContentHandle;
 
 public class Metadata {
@@ -105,6 +107,7 @@ public class Metadata {
 
 	}
 	
+	@JsonIgnoreProperties({"fileContentHandle"})
 	public static class File extends FileSystemElement{
 		public FileContentHandle fileContentHandle;
 
