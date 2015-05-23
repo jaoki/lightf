@@ -1,4 +1,4 @@
-package lightf.api.server;
+package lightf.api.master;
 
 import java.util.List;
 
