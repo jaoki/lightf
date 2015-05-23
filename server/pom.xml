@@ -9,6 +9,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<jersey.version>1.17</jersey.version>
+		<protobuf.version>2.5.0</protobuf.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -28,6 +29,12 @@
 			<artifactId>jersey-json</artifactId>
 			<version>${jersey.version}</version>
 		</dependency>
+		
+		<dependency>
+        	<groupId>com.google.protobuf</groupId>
+        	<artifactId>protobuf-java</artifactId>
+        	<version>${protobuf.version}</version>
+       	</dependency>
 
 		<!-- <dependency> <groupId>com.sun.jersey.contribs</groupId> <artifactId>jersey-multipart</artifactId> 
 			<version>${jersey.version}</version> </dependency> -->

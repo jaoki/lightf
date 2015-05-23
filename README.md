@@ -8,4 +8,7 @@ http://localhost:8082/lightf/api/ls?path=/d1
 http://localhost:8082/lightf/api/touch?path=/d1/f12&content=aaaaa
 http://localhost:8082/lightf/api/cat?path=/d1/f12
 
+mkdir server/target/aaa
+protoc --java_out=server/target/aaa server/src/main/proto/*.proto -Iserver/src/main/proto
+
 
