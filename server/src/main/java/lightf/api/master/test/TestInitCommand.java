@@ -1,4 +1,4 @@
-package lightf.api.master;
+package lightf.api.master.test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import lightf.fs.Metadata.File;
 import lightf.fs.Metadata.FileSystemElement;
 import lightf.fs.MetadataHolder;
 
-@Path("/init")
+@Path("/test/init")
 public class TestInitCommand {
 	
 	@XmlRootElement
