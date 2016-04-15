@@ -2,13 +2,22 @@ package lightf.api.master.test;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URI;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import lightf.hadoop.hdfs.HdfsAccess;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FsShell;
+import org.apache.hadoop.fs.LocatedFileStatus;
+import org.apache.hadoop.fs.RemoteIterator;
+import org.apache.hadoop.hdfs.DistributedFileSystem;
 import org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.ClientNamenodeProtocol;
 import org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.GetFsStatsResponseProto;
 import org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.GetFsStatusRequestProto;
@@ -47,69 +56,74 @@ public class TestEvictDataCommand {
 	}
 
 	@GET
-	public EvictResult get(){
+	public EvictResult get() throws FileNotFoundException, IOException{
 		// TODO do something with HDFS
-		GetFsStatusRequestProto.Builder fsStatusRequestBuilder = GetFsStatusRequestProto.newBuilder();
-		GetFsStatusRequestProto request = fsStatusRequestBuilder.build();
-		RpcChannel channel = new LightFRpcChannel();
-		ClientNamenodeProtocol service = ClientNamenodeProtocol.newStub(channel);
-		RpcController controller = new DummyRpcController();
-		RpcCallback<GetFsStatsResponseProto> done = new DummyRpcCallBack();
-		service.getFsStats(controller, request, done);
+
+		HdfsAccess.access();
+
+
+//		GetFsStatusRequestProto.Builder fsStatusRequestBuilder = GetFsStatusRequestProto.newBuilder();
+//		GetFsStatusRequestProto request = fsStatusRequestBuilder.build();
+//		RpcChannel channel = new LightFRpcChannel();
+//		ClientNamenodeProtocol service = ClientNamenodeProtocol.newStub(channel);
+//		RpcController controller = new DummyRpcController();
+//		RpcCallback<GetFsStatsResponseProto> done = new DummyRpcCallBack();
+//		service.getFsStats(controller, request, done);
 		return new EvictResult();
 		
 	}
-	
-	public static class LightFRpcChannel implements RpcChannel{
 
 
-		@Override
-		public void callMethod(
-					MethodDescriptor method,
-					RpcController controller,
-					Message request,
-					Message responsePrototype,
-					RpcCallback<Message> done) {
-
-			Socket socket = null;
-			DataOutputStream out = null;
-			DataInputStream in = null;
-
-			try {
-				String namenodeHostAddress = "10.103.217.35";
-				socket = new Socket(namenodeHostAddress, 8020);
-				out = new DataOutputStream(socket.getOutputStream());
-				in = new DataInputStream(socket.getInputStream());
-				byte[] requestData = request.toByteArray();
-
-				int requestLength = requestData.length;
-				out.writeInt(requestLength);
-				out.write(requestData, 0, requestLength);
-				out.flush();
-				
-				int responseDataLength = in.readInt();
-				byte[] responseData = new byte[responseDataLength];
-				in.read(responseData, 0, responseDataLength);
-				
-				GetFsStatsResponseProto response = GetFsStatsResponseProto.parseFrom(responseData);
-				done.run(response);
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}finally{
-				try {
-					if(socket != null){
-						socket.close();
-					}
-					if(in != null){
-						in.close();
-					}
-					if(out != null){
-						out.close();
-					}
-				} catch (IOException e) {}
-			}
-		}
-	}
+//	public static class LightFRpcChannel implements RpcChannel{
+//
+//
+//		@Override
+//		public void callMethod(
+//					MethodDescriptor method,
+//					RpcController controller,
+//					Message request,
+//					Message responsePrototype,
+//					RpcCallback<Message> done) {
+//
+//			Socket socket = null;
+//			DataOutputStream out = null;
+//			DataInputStream in = null;
+//
+//			try {
+//				String namenodeHostAddress = "10.103.217.35";
+//				socket = new Socket(namenodeHostAddress, 8020);
+//				out = new DataOutputStream(socket.getOutputStream());
+//				in = new DataInputStream(socket.getInputStream());
+//				byte[] requestData = request.toByteArray();
+//
+//				int requestLength = requestData.length;
+//				out.writeInt(requestLength);
+//				out.write(requestData, 0, requestLength);
+//				out.flush();
+//				
+//				int responseDataLength = in.readInt();
+//				byte[] responseData = new byte[responseDataLength];
+//				in.read(responseData, 0, responseDataLength);
+//				
+//				GetFsStatsResponseProto response = GetFsStatsResponseProto.parseFrom(responseData);
+//				done.run(response);
+//
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}finally{
+//				try {
+//					if(socket != null){
+//						socket.close();
+//					}
+//					if(in != null){
+//						in.close();
+//					}
+//					if(out != null){
+//						out.close();
+//					}
+//				} catch (IOException e) {}
+//			}
+//		}
+//	}
 
 }
